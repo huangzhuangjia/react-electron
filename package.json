@@ -1,0 +1,27 @@
+{
+  "name": "react-electron",
+  "version": "0.1.0",
+  "private": true,
+  "main": "main.js",
+  "homepage": ".",
+  "dependencies": {
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.1.4",
+    "redux": "^4.0.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "electron-dev": "cross-env NODE_ENV=development electron .",
+    "electron-build": "cross-env NODE_ENV=production electron ."
+  },
+  "devDependencies": {
+    "cross-env": "^5.2.0",
+    "electron": "^2.0.6"
+  }
+}
