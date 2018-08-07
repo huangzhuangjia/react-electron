@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as Actions from '../reducers/actions';
-import App from '../views/app';
+import App from '../views/App';
 
 //将state.counter绑定到props的counter
 function mapStateToProps(state) {

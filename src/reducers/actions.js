@@ -1,8 +1,8 @@
-import * as TYPE from './action-types';
+import { SETPLAYLIST } from './action-types';
 
 export function setPlayList(val) {
   return {
-    type: TYPE.SETPLAYLIST,
+    type: SETPLAYLIST,
     value: val
   }
 }

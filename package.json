@@ -13,15 +13,20 @@
     "redux": "^4.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build-css": "node-sass src/assets/scss -o src/assets/css",
+    "watch-css": "npm run build-css && node-sass src/assets/scss -o src/assets/css --watch --recursive",
+    "start-js": "react-scripts start",
+    "start": "npm-run-all -p watch-css start-js",
+    "build": "npm run build-css && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "electron-dev": "cross-env NODE_ENV=development electron .",
     "electron-build": "cross-env NODE_ENV=production electron ."
   },
   "devDependencies": {
+    "axios": "^0.18.0",
     "cross-env": "^5.2.0",
-    "electron": "^2.0.6"
+    "electron": "^2.0.6",
+    "node-sass": "^4.9.2"
   }
 }

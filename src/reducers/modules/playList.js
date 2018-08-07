@@ -1,15 +1,17 @@
-import * as TYPE from '../action-types';
+import { SETPLAYLIST } from '../action-types';
 
-const state = {
+const initState = {
   playList: []
 };
 
-const playList = (state = state, action) => {
+const playList = (state = initState, action) => {
   switch (action.type) {
-    case TYPE.SETPLAYLIST:
+    case SETPLAYLIST:
       return Object.assign({}, state, {
         playList: action.value
       })
+    default:
+      return state
   }
 };
 

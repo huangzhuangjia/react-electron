@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import playList from './modules/playList';
 
 const rootReducer = combineReducers({
-  playList,
+  playList
 });
 
 export default rootReducer;

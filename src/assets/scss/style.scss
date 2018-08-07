@@ -1,0 +1,126 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  .recommend-wrapper {
+    width: 100%;
+    height: 100%;
+    padding: 10px 0px 18px;
+    .recommoned-banner {
+      width: 100%;
+      padding: 5px 18px;
+      display: flex;
+      .cover {
+        width: 32vw;
+        height: 32vw;
+        box-shadow: 0px 6px 18px 0px rgba(73, 73, 73, 0.4);
+        position: relative;
+        .list-tag {
+          position: absolute;
+          right: 8px;
+          bottom: 8px;
+          padding: 3px 8px;
+          font-size: 11px;
+          display: flex;
+          border-radius: 2px;
+          background: rgba(0, 0, 0, .5);
+          color: #FFF;
+          em {
+            margin-right: 1px;
+            font-size: 14px;
+          }
+        }
+        img {
+          display: block;
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .info {
+        width: calc(100% - 32vw);
+        padding-left: 18px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .name {
+          font-size: 3.4vw;
+          font-weight: bold;
+          line-height: 1.6;
+          max-height: 11vw;
+          overflow: hidden;
+        }
+        .desc {
+          font-size: 2.8vw;
+          color: #999;
+          line-height: 1.6;
+          height: 8.5vw;
+          overflow: hidden;
+        }
+        .play-btn {
+          width: 100px;
+          height: 8vw;
+          background: $theme;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #FFF;
+          cursor: pointer;
+          font-size: 12px;
+          -webkit-app-region: no-drag;
+          i {
+            margin-right: 5px;
+            font-size: 24px;
+          }
+        }
+      }
+    }
+    .item-list {
+      width: 100%;
+      height: calc(100% - 32vw - 38px);
+      overflow-y: auto;
+      -webkit-app-region: no-drag;
+      margin-top: 16px;
+      padding-bottom: 68px;
+      .album-itembox {
+        width: 100%;
+        padding: 8px 18px;
+        display: flex;
+        cursor: pointer;
+        -webkit-app-region: no-drag;
+        transition: all 250ms ease;
+        &:hover {
+          background: #F0F0F0;
+        }
+        .cover {
+          width: 68px;
+          height: 68px;
+          img {
+            display: block;
+            width: 100%;
+            height: 100%;
+          }
+        }
+        .r {
+          width: calc(100% - 68px);
+          padding: 0px 0px 0px 12px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          .desc {
+            font-size: 14px;
+            line-height: 1.6;
+          }
+          .num {
+            font-size: 12px;
+            color: #999;
+            display: flex;
+            i {
+              margin-right: 4px;
+              align-items: center;
+            }
+          }
+        }
+      }
+    }
+  }
+}

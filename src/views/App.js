@@ -8,6 +8,7 @@ class App extends Component {
       <Router>
         <Switch>
           <Route path="/home" component={Home}/>
+          <Route path="/" component={Home}/>
         </Switch>
       </Router>
     );
