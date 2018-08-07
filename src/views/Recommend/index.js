@@ -5,6 +5,7 @@ import LazyImg from 'lazy-img-react';
 import API from '../../api';
 import store from '../../store';
 import * as Actions from '../../reducers/actions';
+import config from '../../config'
 
 class Index extends Component{
   constructor() {
@@ -28,8 +29,30 @@ class Index extends Component{
   componentDidMount() {
     this.getRecommendList()
   }
+  renderList(recommendList) {
+    return recommendList.map((data, k) => {
+      if(k > 0) {
+        return (
+          <Link to={`/listDetail/${data.id}`} key={k}>
+            <div className="album-itembox">
+              <div className="cover">
+                <LazyImg src={data.picUrl} placeholder={config.defaultCover} />
+              </div>
+              <div className="r">
+                <div className="desc">{data.name}</div>
+                <div className="num">
+                  <i className="iconfont icon-iconset0271"></i>
+                  <span>{this.getPlayCount(data.playCount)}</span>
+                </div>
+              </div>
+            </div>
+          </Link>
+        )
+      }
+    })
+  }
   render() {
-    let recommendList = store.getState().Recommend.recommendList
+    let recommendList = store.getState().Recommend.recommendList;
     return (
       <div className="recommend-wrapper">
         {
@@ -37,7 +60,7 @@ class Index extends Component{
             <div className="recommoned-banner">
               <div className="cover">
                 <i className="list-tag"><em className="iconfont icon-iconset0271"></em>{this.getPlayCount(recommendList[0].playCount)}</i>
-                <LazyImg src={recommendList[0].picUrl || ''} placeholder={'//39.105.103.128/fluentapi/placeholderCover.png'}/>
+                <LazyImg src={recommendList[0].picUrl || ''} placeholder={config.defaultCover}/>
               </div>
               <div className="info">
                 <div className="name">{recommendList[0].name || ''}</div>
@@ -50,26 +73,7 @@ class Index extends Component{
         }
         <div className="item-list">
           {
-            recommendList.map((data, k) => {
-              if(k > 0) {
-                return (
-                  <Link to={`/listDetail/${data.id}`} key={k}>
-                    <div className="album-itembox">
-                      <div className="cover">
-                        <LazyImg src={data.picUrl} placeholder={'//39.105.103.128/fluentapi/placeholderCover.png'} />
-                      </div>
-                      <div className="r">
-                        <div className="desc">{data.name}</div>
-                        <div className="num">
-                          <i className="iconfont icon-iconset0271"></i>
-                          <span>{this.getPlayCount(data.playCount)}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                )
-              }
-            })
+           this.renderList(recommendList)
           }
           {
             recommendList.length == 0?

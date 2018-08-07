@@ -6,10 +6,12 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <Switch>
-          <Route path="/home" component={Home}/>
-          <Route path="/" component={Home}/>
-        </Switch>
+        <div className="play-wrapper">
+          <Switch>
+            <Route path="/home" component={Home}/>
+            <Route path="/" component={Home}/>
+          </Switch>
+        </div>
       </Router>
     );
   }
