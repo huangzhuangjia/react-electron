@@ -1,15 +1,15 @@
 // 推荐歌单
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import LazyImg from 'lazy-img-react';
-import API from '../../api';
-import store from '../../store';
-import * as Actions from '../../reducers/actions';
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import LazyImg from 'lazy-img-react'
+import API from '../../api'
+import store from '../../store'
+import * as Actions from '../../reducers/actions'
 import config from '../../config'
 
 class Index extends Component{
   constructor() {
-    super()
+    super();
   }
   getRecommendList() {
     API.getRecommendList('/personalized').then(res => {
