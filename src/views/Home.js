@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { Link } from 'react-router-dom'
-import Recommend from './Recommend'
+import Recommend from './recommend'
 import eventEmitter from '../config/eventEmitter'
 import * as Events from '../config/event-types'
 

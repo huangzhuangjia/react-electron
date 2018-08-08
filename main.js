@@ -9,7 +9,7 @@ function createWindow() {
  // 创建浏览器窗口
   mainWindow = new BrowserWindow({
     frame: false,
-    width: 1000,
+    width: process.env.NODE_ENV === 'development' ? 1000 : 400,
     height: 670,
     transparent: true,
     resizable: false,
@@ -24,13 +24,12 @@ function createWindow() {
     },
     icon: path.join(__dirname, 'logo.ico')
   })
-
   if (process.env.NODE_ENV === 'development') {
     // 加载应用----适用于 react 项目
     mainWindow.loadURL('http://localhost:3000/');
     // 打开开发者工具，默认不打开
     mainWindow.webContents.openDevTools();
-  } else if (process.env.NODE_ENV === 'production') {
+  } else {
     mainWindow.loadURL(url.format({
       pathname: path.join(__dirname, '/build/index.html'),
       protocol: 'file:',

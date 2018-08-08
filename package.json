@@ -1,5 +1,5 @@
 {
-  "name": "react-electron",
+  "name": "JMusic",
   "version": "0.1.0",
   "private": true,
   "main": "main.js",
@@ -59,11 +59,12 @@
     "sass-loader": "^7.1.0"
   },
   "scripts": {
-    "start": "node scripts/start.js",
+    "electron-dev": "cross-env NODE_ENV=development electron .",
+    "start": "concurrently \"node scripts/start.js\" \"npm run electron-dev\"",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
-    "electron-dev": "cross-env NODE_ENV=development electron .",
-    "package": "cross-env NODE_ENV=production npm run build && electron-packager ./ --appname=myApp --platform=win32 --out=./release --arch=x64 --electron-version=2.0.6 --icon=./logo.ico --overwrite"
+    "package:win": "npm run build && rm -rf release && electron-packager ./ --appname=JMusic --platform=win32 --out=./release --arch=x64 --electron-version=2.0.6 --icon=./logo.ico --overwrite",
+    "package:mac": "npm run build && rm -rf release && electron-packager ./ --appname=JMusic --platform=darwin --out=./release --arch=x64 --electron-version=2.0.6 --icon=./logo.ico --overwrite"
   },
   "jest": {
     "collectCoverageFrom": [
