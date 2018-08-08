@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "main": "main.js",
-  "homepage": ".",
+  "homepage": "./",
   "dependencies": {
     "prop-types": "^15.6.2",
     "react": "^16.4.2",
@@ -12,6 +12,13 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
     "redux": "^4.0.0"
+  },
+  "devDependencies": {
+    "axios": "^0.18.0",
+    "cross-env": "^5.2.0",
+    "electron": "^2.0.6",
+    "lazy-img-react": "^1.0.0",
+    "node-sass": "^4.9.2"
   },
   "scripts": {
     "build-css": "node-sass src/assets/scss -o src/assets/css",
@@ -23,12 +30,5 @@
     "eject": "react-scripts eject",
     "electron-dev": "cross-env NODE_ENV=development electron .",
     "electron-build": "cross-env NODE_ENV=production electron ."
-  },
-  "devDependencies": {
-    "axios": "^0.18.0",
-    "cross-env": "^5.2.0",
-    "electron": "^2.0.6",
-    "lazy-img-react": "^1.0.0",
-    "node-sass": "^4.9.2"
   }
 }
