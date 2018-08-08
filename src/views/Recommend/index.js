@@ -76,7 +76,7 @@ class Index extends Component{
            this.renderList(recommendList)
           }
           {
-            recommendList.length == 0?
+            recommendList.length === 0?
               <div className="loadingempty">
                 <span className="iconfont icon-wujilu"></span>
                 <p>~空空如也~</p>

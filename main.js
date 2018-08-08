@@ -9,14 +9,17 @@ function createWindow() {
  // 创建浏览器窗口
   mainWindow = new BrowserWindow({
     frame: false,
-    width: 400,
+    width: 1000,
     height: 670,
     transparent: true,
     resizable: false,
     maximizable: false,
     backgroundColor: '#00FFFFFF',
     webPreferences: {
+      javascript: true,
+      plugins: true,
       nodeIntegration: false, // 不集成 Nodejs
+      webSecurity: false,
       preload: path.join(__dirname, './public/renderer.js') // 但预加载的 js 文件内仍可以使用 Nodejs 的 API
     },
     icon: path.join(__dirname, 'logo.ico')
@@ -26,7 +29,7 @@ function createWindow() {
     // 加载应用----适用于 react 项目
     mainWindow.loadURL('http://localhost:3000/');
     // 打开开发者工具，默认不打开
-    // mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
   } else if (process.env.NODE_ENV === 'production') {
     mainWindow.loadURL(url.format({
       pathname: path.join(__dirname, '/build/index.html'),

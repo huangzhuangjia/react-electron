@@ -4,8 +4,9 @@ import Recommend from './Recommend'
 import eventEmitter from '../config/eventEmitter'
 import * as Events from '../config/event-types'
 
-const electron = require('electron');
+const electron = window.electron
 const remote = electron.remote;
+
 
 class Home extends Component {
   constructor() {
