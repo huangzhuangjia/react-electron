@@ -96,7 +96,7 @@ class App extends Component {
   batchAddToPlayList(item) {
     let playList = store.getState().main.playList || [];
     let addItem = [];
-    item.map((data, k) => {
+    item.map((data) => {
       let repeat = false;
       playList.map((d, j) => {
         if(data.id === d.id) {
