@@ -1,4 +1,4 @@
-import { SETRECOMMENDLIST } from "../action-types";
+import { SET_RECOMMEND_LIST } from "../action-types";
 
 const initState = {
   recommendList: []
@@ -6,7 +6,7 @@ const initState = {
 
 const Recommend = (state = initState, action) => {
   switch (action.type) {
-    case SETRECOMMENDLIST:
+    case SET_RECOMMEND_LIST:
       return Object.assign({}, state, {
         recommendList: action.value
       });

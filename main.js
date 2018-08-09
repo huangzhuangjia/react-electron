@@ -1,12 +1,44 @@
 // 引入electron并创建一个Browserwindow
-const {app, BrowserWindow} = require('electron')
-const path = require('path')
-const url = require('url')
+const {app, BrowserWindow, ipcMain} = require('electron');
+const path = require('path');
+const url = require('url');
 // 保持window对象的全局引用,避免JavaScript对象被垃圾回收时,窗口被自动关闭.
-let mainWindow
+let mainWindow;
+let thumbarButtons = [
+  {
+    tooltip: '上一曲',
+    icon: path.join(__dirname, './resource/prev.png'),
+    flags: [
+      'nobackground'
+    ],
+    click: () => {
+      mainWindow.webContents.send('pre');
+    }
+  },
+  {
+    tooltip: '播放',
+    icon: path.join(__dirname, './resource/play.png'),
+    flags: [
+      'nobackground'
+    ],
+    click: () => {
+      mainWindow.webContents.send('switch');
+    }
+  },
+  {
+    tooltip: '下一曲',
+    icon: path.join(__dirname, './resource/next.png'),
+    flags: [
+      'nobackground'
+    ],
+    click: () => {
+      mainWindow.webContents.send('next');
+    }
+  }
+];
 
 function createWindow() {
- // 创建浏览器窗口
+  // 创建浏览器窗口
   mainWindow = new BrowserWindow({
     frame: false,
     width: process.env.NODE_ENV === 'development' ? 1000 : 400,
@@ -20,9 +52,9 @@ function createWindow() {
       plugins: true,
       nodeIntegration: false, // 不集成 Nodejs
       webSecurity: false,
-      preload: path.join(__dirname, './public/renderer.js') // 但预加载的 js 文件内仍可以使用 Nodejs 的 API
+      preload: path.join(__dirname, './public/renderer.js') // 预加载
     },
-    icon: path.join(__dirname, 'logo.ico')
+    icon: path.join(__dirname, './resource/logo.ico')
   })
   if (process.env.NODE_ENV === 'development') {
     // 加载应用----适用于 react 项目
@@ -40,9 +72,11 @@ function createWindow() {
   // 关闭window时触发下列事件.
   mainWindow.on('closed', function () {
     mainWindow = null
-  })
+  });
+  // 添加按钮到菜单栏的缩图工具栏
+  mainWindow.setThumbarButtons(thumbarButtons);
 }
-
+app.setName('JMusic');
 // 当 Electron 完成初始化并准备创建浏览器窗口时调用此方法
 app.on('ready', createWindow)
 
@@ -60,3 +94,9 @@ app.on('activate', function () {
     createWindow()
   }
 })
+
+ipcMain.on('playSwitch', (e, state) => {
+  let icon = state ? './resource/paused.png' : './resource/play.png';
+  thumbarButtons[1].icon = path.join(__dirname, icon);
+  mainWindow.setThumbarButtons(thumbarButtons);
+});

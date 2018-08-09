@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import Swiper from 'swiper'
+import SingleSearch from './singleSearch'
+import AlbumSearch from './albumSearch'
+import SingerSearch from './singerSearch'
+import SongListSearch from './songListSearch'
 
 class Search extends Component{
   constructor() {
@@ -128,10 +132,10 @@ class Search extends Component{
         </div>
         <div className="search-tab-wrapper">
           <div className="swiper-wrapper">
-            <div className="swiper-slide">1</div>
-            <div className="swiper-slide">2</div>
-            <div className="swiper-slide">3</div>
-            <div className="swiper-slide">4</div>
+            <div className="swiper-slide"><SingleSearch data={state.singleItem} load={this.loadingMore.bind(this)} count={state.singleCount}/></div>
+            <div className="swiper-slide"><AlbumSearch data={state.albumItem} load={this.loadingMore.bind(this)} count={state.albumCount}/></div>
+            <div className="swiper-slide"><SingerSearch data={state.singerItem} load={this.loadingMore.bind(this)} count={state.singerCount}/></div>
+            <div className="swiper-slide"><SongListSearch data={state.listItem} load={this.loadingMore.bind(this)} count={state.listCount}/></div>
           </div>
         </div>
       </div>

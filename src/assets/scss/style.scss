@@ -15,13 +15,694 @@ $theme: #666;
   overflow: hidden;
   box-shadow: 0px 6px 18px 0px rgba(73, 73, 73, 0.4);
   position: relative;
-}
-.home-wrapper {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  overflow: hidden;
-  padding-top: 50px;
+  .play-list-dialog{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0px;
+    top: -200vh;
+    z-index: 1000;
+    .mask{
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,.3);
+      opacity: 0;
+      transition: all 250ms ease-in-out;
+      -webkit-app-region: no-drag;
+    }
+    .list-wrap{
+      width: 100%;
+      height: 60vh;
+      position: absolute;
+      left: 0px;
+      bottom: -60vh;
+      background: #FFF;
+      transition: all 250ms ease-in-out;
+      -webkit-app-region: no-drag;
+      .list-wrap-head{
+        width: 100%;
+        height: 40px;
+        display: flex;
+        padding: 0px 18px;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: solid 1px #F9F9F9;
+        .label{
+          font-size: 12px;
+          display: flex;
+          i{
+            font-size: 16px;
+            margin-right: 4px;
+          }
+        }
+        .clear{
+          font-size: 16px;
+          color: #999;
+          cursor: pointer;
+        }
+      }
+      .list-item{
+        width: 100%;
+        height: calc(100% - 40px);
+        overflow-y: auto;
+        .row{
+          padding: 10px 0px 10px 18px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          cursor: default;
+          transition: all 250ms ease;
+          &:hover{
+            background: #F0F0F0;
+          }
+          .info{
+            display: flex;
+            align-items: center;
+            width: calc(100% - 50px);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 14px;
+            span{
+              font-size: 12px;
+              color: #999;
+            }
+          }
+          .del{
+            width: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            color: #999;
+          }
+        }
+        .row-playing{
+          background: #F0F0F0;
+          .info{
+            span{
+              font-weight: bold;
+            }
+            &:before{
+              content: '\e6a9';
+              font-family: iconfont;
+              font-weight: normal;
+              margin-right: 10px;
+              font-size: 16px;
+            }
+          }
+        }
+      }
+    }
+    .mask-active{
+      opacity: 1;
+    }
+    .list-wrap-active{
+      bottom: 0px;
+    }
+  }
+  .play-list-dialog-active{
+    top: 0px;
+  }
+  .fix-control {
+    width: 100%;
+    height: 50px;
+    background: #FFF;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    z-index: 999;
+    box-shadow: 0px -2px 8px rgba(0, 0, 0, 0.05);
+    display: none;
+    .play-bar {
+      width: 100%;
+      height: 3px;
+      background: #FFF;
+      position: absolute;
+      left: 0px;
+      bottom: 0px;
+      .curBar {
+        width: 0%;
+        height: 3px;
+        background: $theme;
+      }
+    }
+    .cover {
+      width: 50px;
+      height: 50px;
+      padding: 8px;
+      -webkit-app-region: no-drag;
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .info {
+      width: calc(100% - 50px - 48px - 40px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      padding: 5px 12px 7px 4px;
+      -webkit-app-region: no-drag;
+      .name {
+        font-size: 13px;
+        color: #333;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .singer {
+        font-size: 11px;
+        color: #999;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+    .play-icon {
+      width: 48px;
+      height: 48px;
+      cursor: auto;
+      -webkit-app-region: no-drag;
+      position: relative;
+      .icon{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: $theme;
+        font-size: 22px;
+      }
+      .progress{
+        width: 31px;
+        height: 31px;
+        position: absolute;
+        left: 8px;
+        top: 9px;
+      }
+    }
+    .play-list{
+      width: 40px;
+      padding-right: 5px;
+      height: 48px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #666;
+      font-size: 22px;
+      cursor: pointer;
+      -webkit-app-region: no-drag;
+    }
+  }
+  .fix-control-active{
+    display: flex;
+  }
+  .snackbar {
+    max-width: 50vw;
+    min-width: 30vw;
+    padding: 5px 12px;
+    background: rgba(0, 0, 0, .8);
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    color: #FFF;
+    font-size: 13px;
+    line-height: 1.6;
+    text-align: center;
+    border-radius: 3px;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    word-break: break-all;
+  }
+  .home-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    padding-top: 50px;
+    .home-tab {
+      width: 100%;
+      height: 32px;
+      display: flex;
+      justify-content: space-around;
+      font-size: 14px;
+      align-items: center;
+      -webkit-app-region: no-drag;
+      .tab {
+        color: #999;
+        transition: all 250ms ease;
+        -webkit-app-region: no-drag;
+        cursor: pointer;
+        &:hover {
+          color: #333;
+        }
+      }
+      .cur {
+        color: #333;
+        font-weight: bold;
+      }
+    }
+    .home-tab-wrapper {
+      width: 100%;
+      height: calc(100vh - 50px - 32px);
+      .swiper-wrapper {
+        display: flex;
+        width: 400vw;
+        height: 100%;
+      }
+      .swiper-slide {
+        width: 100vw;
+        height: 100%;
+      }
+    }
+    .recommend-wrapper {
+      width: 100%;
+      height: 100%;
+      padding: 10px 0px 18px;
+      .recommoned-banner {
+        width: 100%;
+        padding: 5px 18px;
+        display: flex;
+        .cover {
+          width: 32vw;
+          height: 32vw;
+          box-shadow: 0px 6px 18px 0px rgba(73, 73, 73, 0.4);
+          position: relative;
+          .list-tag {
+            position: absolute;
+            right: 8px;
+            bottom: 8px;
+            padding: 3px 8px;
+            font-size: 11px;
+            display: flex;
+            border-radius: 2px;
+            background: rgba(0, 0, 0, .5);
+            color: #FFF;
+            em {
+              margin-right: 1px;
+              font-size: 14px;
+            }
+          }
+          img {
+            display: block;
+            width: 100%;
+            height: 100%;
+          }
+        }
+        .info {
+          width: calc(100% - 32vw);
+          padding-left: 18px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          .name {
+            font-size: 3.4vw;
+            font-weight: bold;
+            line-height: 1.6;
+            max-height: 11vw;
+            overflow: hidden;
+          }
+          .desc {
+            font-size: 2.8vw;
+            color: #999;
+            line-height: 1.6;
+            height: 8.5vw;
+            overflow: hidden;
+          }
+          .play-btn {
+            width: 100px;
+            height: 8vw;
+            background: $theme;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFF;
+            cursor: pointer;
+            font-size: 12px;
+            -webkit-app-region: no-drag;
+            i {
+              margin-right: 5px;
+              font-size: 24px;
+            }
+          }
+        }
+      }
+      .item-list {
+        width: 100%;
+        height: calc(100% - 32vw - 38px);
+        overflow-y: auto;
+        -webkit-app-region: no-drag;
+        margin-top: 16px;
+        padding-bottom: 68px;
+        .album-itembox {
+          width: 100%;
+          padding: 8px 18px;
+          display: flex;
+          cursor: pointer;
+          -webkit-app-region: no-drag;
+          transition: all 250ms ease;
+          &:hover {
+            background: #F0F0F0;
+          }
+          .cover {
+            width: 68px;
+            height: 68px;
+            img {
+              display: block;
+              width: 100%;
+              height: 100%;
+            }
+          }
+          .r {
+            width: calc(100% - 68px);
+            padding: 0px 0px 0px 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            .desc {
+              font-size: 14px;
+              line-height: 1.6;
+            }
+            .num {
+              font-size: 12px;
+              color: #999;
+              display: flex;
+              i {
+                margin-right: 4px;
+                align-items: center;
+              }
+            }
+          }
+        }
+      }
+    }
+    .newest {
+      width: 100%;
+      height: 100%;
+      padding: 10px 0px 18px;
+      .newest-banner {
+        width: 100%;
+        height: 25vh;
+        overflow: hidden;
+        position: relative;
+        display: none;
+        .bg {
+          display: block;
+          width: 100%;
+        }
+      }
+      .item-list {
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+        padding-bottom: 68px;
+        padding-top: 10px;
+        .song-itembox {
+          width: 100%;
+          padding: 8px 18px;
+          display: flex;
+          cursor: pointer;
+          -webkit-app-region: no-drag;
+          transition: all 250ms ease;
+          position: relative;
+          &:hover {
+            background: #F0F0F0;
+          }
+          .cover {
+            width: 38px;
+            height: 38px;
+            img {
+              display: block;
+              width: 100%;
+              height: 100%;
+            }
+          }
+          .info {
+            width: calc(100% - 38px);
+            padding: 0px 0px 0px 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            .name {
+              font-size: 14px;
+              line-height: 1.6;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
+            .singer {
+              font-size: 12px;
+              color: #999;
+              display: flex;
+              i {
+                margin-right: 4px;
+                align-items: center;
+              }
+            }
+          }
+        }
+        .song-itembox-active{
+          .info {
+            width: calc(100% - 70px);
+          }
+          &:before {
+            content: '\e6a9';
+            font-family: iconfont;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            right: 16px;
+            top: 0px;
+            height: 100%;
+            color: $theme;
+            font-size: 26px;
+          }
+          position: relative;
+          background: #F0F0F0;
+        }
+      }
+    }
+    .album {
+      width: 100%;
+      height: 100%;
+      padding: 10px 0px 18px;
+      .item-list {
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+        padding-bottom: 68px;
+        padding-top: 10px;
+        .album-itembox {
+          width: 50%;
+          padding: 8px 18px;
+          height: 48vw;
+          display: flex;
+          flex-direction: column;
+          cursor: pointer;
+          -webkit-app-region: no-drag;
+          transition: all 250ms ease;
+          float: left;
+          &:hover {
+            .cover {
+              &:before {
+                right: -24px;
+              }
+            }
+          }
+          .cover {
+            width: 30vw;
+            height: 30vw;
+            position: relative;
+            &:before {
+              content: '';
+              display: block;
+              width: 30vw;
+              height: 30vw;
+              background: #333;
+              border-radius: 50%;
+              position: absolute;
+              right: -15px;
+              top: 50%;
+              margin-top: -15vw;
+              transition: all 250ms ease-out;
+            }
+            img {
+              display: block;
+              width: 100%;
+              height: 100%;
+              position: absolute;
+              left: 0px;
+              top: 0px;
+              z-index: 9;
+              box-shadow: 0px 2px 6px 0px rgba(73, 73, 73, 0.1);
+              background: #FFF;
+            }
+          }
+          .info {
+            width: 100%;
+            padding: 10px 0px 0px;
+            .name {
+              width: 100%;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              font-size: 14px;
+              line-height: 1.6;
+            }
+            .singer {
+              width: 100%;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              font-size: 12px;
+              color: #999;
+              display: flex;
+              i {
+                margin-right: 4px;
+                align-items: center;
+              }
+            }
+          }
+        }
+      }
+    }
+    .mysong {
+      width: 100%;
+      height: 100%;
+      padding: 10px 0px 18px;
+      position: relative;
+      .mysong-empty {
+        width: 100%;
+        padding: 10vh 0px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        -webkit-app-region: no-drag;
+        .loading {
+          width: 60vw;
+        }
+        .loading-text {
+          font-size: 12px;
+          color: #999;
+          margin-top: 8px;
+          margin-bottom: 20px;
+        }
+        .tip {
+          font-size: 14px;
+          font-weight: bold;
+        }
+        .file-btn {
+          padding: 10px 20px;
+          background: $theme;
+          color: #FFF;
+          font-size: 12px;
+          cursor: pointer;
+          -webkit-app-region: no-drag;
+          margin-top: 12px;
+        }
+      }
+      .item-list {
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+        padding-bottom: 68px;
+        padding-top: 10px;
+        .list-head{
+          width: 100%;
+          display: flex;
+          padding: 0px 18px 20px;
+          align-items: center;
+          justify-content: space-between;
+          .label{
+            font-size: 14px;
+            i{
+              color: #999;
+              font-size: 11px;
+              margin-left: 5px;
+            }
+          }
+          .adddir{
+            color: $theme;
+            margin-left: 12px;
+            -webkit-app-region: no-drag;
+            cursor: pointer;
+          }
+        }
+        .song-itembox {
+          width: 100%;
+          padding: 8px 18px;
+          display: flex;
+          cursor: pointer;
+          -webkit-app-region: no-drag;
+          transition: all 250ms ease;
+          &:hover {
+            background: #F0F0F0;
+          }
+          .cover {
+            width: 38px;
+            height: 38px;
+            img {
+              display: block;
+              width: 100%;
+              height: 100%;
+            }
+          }
+          .info {
+            width: calc(100% - 38px);
+            padding: 0px 0px 0px 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            .name {
+              font-size: 14px;
+              line-height: 1.6;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
+            .singer {
+              font-size: 12px;
+              color: #999;
+              display: flex;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              i {
+                margin-right: 4px;
+                align-items: center;
+              }
+            }
+          }
+        }
+        .song-itembox-active{
+          .info {
+            width: calc(100% - 70px);
+          }
+          &:before {
+            content: '\e6a9';
+            font-family: iconfont;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            right: 16px;
+            top: 0px;
+            height: 100%;
+            color: $theme;
+            font-size: 26px;
+          }
+          position: relative;
+          background: #F0F0F0;
+        }
+      }
+    }
+  }
   .windowsHead {
     position: absolute;
     width: 100%;
@@ -94,874 +775,590 @@ $theme: #666;
       }
     }
   }
-  .home-tab {
-    width: 100%;
-    height: 32px;
-    display: flex;
-    justify-content: space-around;
-    font-size: 14px;
-    align-items: center;
-    -webkit-app-region: no-drag;
-    .tab {
-      color: #999;
-      transition: all 250ms ease;
-      -webkit-app-region: no-drag;
-      cursor: pointer;
-      &:hover {
-        color: #333;
-      }
-    }
-    .cur {
-      color: #333;
-      font-weight: bold;
-    }
-  }
-  .home-tab-wrapper {
-    width: 100%;
-    height: calc(100vh - 50px - 32px);
-    .swiper-wrapper {
-      display: flex;
-      width: 400vw;
-      height: 100%;
-    }
-    .swiper-slide {
-      width: 100vw;
-      height: 100%;
-    }
-  }
-  .recommend-wrapper {
+  .listDetail-wrapper {
     width: 100%;
     height: 100%;
-    padding: 10px 0px 18px;
-    .recommoned-banner {
+    position: relative;
+    overflow: hidden;
+    .wrap {
       width: 100%;
-      padding: 5px 18px;
-      display: flex;
-      .cover {
-        width: 32vw;
-        height: 32vw;
-        box-shadow: 0px 6px 18px 0px rgba(73, 73, 73, 0.4);
-        position: relative;
-        .list-tag {
-          position: absolute;
-          right: 8px;
-          bottom: 8px;
+      height: 100%;
+      overflow-y: auto;
+    }
+    .listCoverBanner {
+      width: 100%;
+      height: 38vh;
+      position: relative;
+      .play {
+        position: absolute;
+        right: 0px;
+        bottom: -26px;
+        width: 56px;
+        height: 56px;
+        background: $theme;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #FFF;
+        padding-left: 4px;
+        font-size: 28px;
+        cursor: pointer;
+        -webkit-app-region: no-drag;
+        z-index: 9;
+        &:after{
+          content: '添加到歌单';
+          display: block;
           padding: 3px 8px;
-          font-size: 11px;
-          display: flex;
-          border-radius: 2px;
-          background: rgba(0, 0, 0, .5);
           color: #FFF;
-          em {
-            margin-right: 1px;
-            font-size: 14px;
+          background: rgba(0,0,0,.7);
+          position: absolute;
+          left: -152%;
+          top: 50%;
+          opacity: 0;
+          transform: translate(10%, -50%);
+          transition: all 250ms ease;
+          font-size: 12px;
+          pointer-events: none;
+          font-family: "amble", "Microsoft YaHei", "PingFangSC-Regular", STHeiti, Helvetica, Arial, sans-serif !important;
+        }
+        &:hover{
+          &:after{
+            transform: translate(0%, -50%);
+            opacity: 1;
           }
         }
+      }
+      .cover {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
         img {
           display: block;
           width: 100%;
-          height: 100%;
-        }
-      }
-      .info {
-        width: calc(100% - 32vw);
-        padding-left: 18px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        .name {
-          font-size: 3.4vw;
-          font-weight: bold;
-          line-height: 1.6;
-          max-height: 11vw;
-          overflow: hidden;
-        }
-        .desc {
-          font-size: 2.8vw;
-          color: #999;
-          line-height: 1.6;
-          height: 8.5vw;
-          overflow: hidden;
-        }
-        .play-btn {
-          width: 100px;
-          height: 8vw;
-          background: $theme;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: #FFF;
-          cursor: pointer;
-          font-size: 12px;
-          -webkit-app-region: no-drag;
-          i {
-            margin-right: 5px;
-            font-size: 24px;
-          }
+          transform: scale(1.2);
         }
       }
     }
-    .item-list {
+    .listInfo {
       width: 100%;
-      height: calc(100% - 32vw - 38px);
-      overflow-y: auto;
-      -webkit-app-region: no-drag;
-      margin-top: 16px;
-      padding-bottom: 68px;
-      .album-itembox {
-        width: 100%;
-        padding: 8px 18px;
-        display: flex;
-        cursor: pointer;
-        -webkit-app-region: no-drag;
-        transition: all 250ms ease;
-        &:hover {
-          background: #F0F0F0;
-        }
-        .cover {
-          width: 68px;
-          height: 68px;
-          img {
-            display: block;
-            width: 100%;
-            height: 100%;
-          }
-        }
-        .r {
-          width: calc(100% - 68px);
-          padding: 0px 0px 0px 12px;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          .desc {
-            font-size: 14px;
-            line-height: 1.6;
-          }
-          .num {
-            font-size: 12px;
-            color: #999;
-            display: flex;
-            i {
-              margin-right: 4px;
-              align-items: center;
-            }
-          }
-        }
+      padding: 40px 20px 30px;
+      .name {
+        font-size: 15px;
+        font-weight: bold;
+        line-height: 1.6;
       }
-    }
-  }
-  .newest {
-    width: 100%;
-    height: 100%;
-    padding: 10px 0px 18px;
-    .newest-banner {
-      width: 100%;
-      height: 25vh;
-      overflow: hidden;
-      position: relative;
-      display: none;
-      .bg {
-        display: block;
-        width: 100%;
-      }
-    }
-    .item-list {
-      width: 100%;
-      height: 100%;
-      overflow-y: auto;
-      padding-bottom: 68px;
-      padding-top: 10px;
-      .song-itembox {
-        width: 100%;
-        padding: 8px 18px;
-        display: flex;
-        cursor: pointer;
-        -webkit-app-region: no-drag;
-        transition: all 250ms ease;
-        position: relative;
-        &:hover {
-          background: #F0F0F0;
-        }
-        .cover {
-          width: 38px;
-          height: 38px;
-          img {
-            display: block;
-            width: 100%;
-            height: 100%;
-          }
-        }
-        .info {
-          width: calc(100% - 38px);
-          padding: 0px 0px 0px 12px;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          .name {
-            font-size: 14px;
-            line-height: 1.6;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-          }
-          .singer {
-            font-size: 12px;
-            color: #999;
-            display: flex;
-            i {
-              margin-right: 4px;
-              align-items: center;
-            }
-          }
-        }
-      }
-      .song-itembox-active{
-        .info {
-          width: calc(100% - 70px);
-        }
-        &:before {
-          content: '\e6a9';
-          font-family: iconfont;
-          position: absolute;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          right: 16px;
-          top: 0px;
-          height: 100%;
-          color: $theme;
-          font-size: 26px;
-        }
-        position: relative;
-        background: #F0F0F0;
-      }
-    }
-  }
-  .album {
-    width: 100%;
-    height: 100%;
-    padding: 10px 0px 18px;
-    .item-list {
-      width: 100%;
-      height: 100%;
-      overflow-y: auto;
-      padding-bottom: 68px;
-      padding-top: 10px;
-      .album-itembox {
-        width: 50%;
-        padding: 8px 18px;
-        height: 48vw;
-        display: flex;
-        flex-direction: column;
-        cursor: pointer;
-        -webkit-app-region: no-drag;
-        transition: all 250ms ease;
-        float: left;
-        &:hover {
-          .cover {
-            &:before {
-              right: -24px;
-            }
-          }
-        }
-        .cover {
-          width: 30vw;
-          height: 30vw;
-          position: relative;
-          &:before {
-            content: '';
-            display: block;
-            width: 30vw;
-            height: 30vw;
-            background: #333;
-            border-radius: 50%;
-            position: absolute;
-            right: -15px;
-            top: 50%;
-            margin-top: -15vw;
-            transition: all 250ms ease-out;
-          }
-          img {
-            display: block;
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            left: 0px;
-            top: 0px;
-            z-index: 9;
-            box-shadow: 0px 2px 6px 0px rgba(73, 73, 73, 0.1);
-            background: #FFF;
-          }
-        }
-        .info {
-          width: 100%;
-          padding: 10px 0px 0px;
-          .name {
-            width: 100%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            font-size: 14px;
-            line-height: 1.6;
-          }
-          .singer {
-            width: 100%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            font-size: 12px;
-            color: #999;
-            display: flex;
-            i {
-              margin-right: 4px;
-              align-items: center;
-            }
-          }
-        }
-      }
-    }
-  }
-  .mysong {
-    width: 100%;
-    height: 100%;
-    padding: 10px 0px 18px;
-    position: relative;
-    .mysong-empty {
-      width: 100%;
-      padding: 10vh 0px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      -webkit-app-region: no-drag;
-      .loading {
-        width: 60vw;
-      }
-      .loading-text {
+      .desc {
         font-size: 12px;
         color: #999;
-        margin-top: 8px;
-        margin-bottom: 20px;
-      }
-      .tip {
-        font-size: 14px;
-        font-weight: bold;
-      }
-      .file-btn {
-        padding: 10px 20px;
-        background: $theme;
-        color: #FFF;
-        font-size: 12px;
-        cursor: pointer;
-        -webkit-app-region: no-drag;
         margin-top: 12px;
+        line-height: 1.6;
+        max-height: 56px;
+        overflow: hidden;
       }
     }
-    .item-list {
+    .song-list {
       width: 100%;
-      height: 100%;
-      overflow-y: auto;
-      padding-bottom: 68px;
-      padding-top: 10px;
-      .list-head{
+      padding-bottom: 70px;
+      .song {
         width: 100%;
+        padding: 0px 0px;
         display: flex;
-        padding: 0px 18px 20px;
-        align-items: center;
-        justify-content: space-between;
-        .label{
-          font-size: 14px;
-          i{
-            color: #999;
-            font-size: 11px;
-            margin-left: 5px;
-          }
-        }
-        .adddir{
-          color: $theme;
-          margin-left: 12px;
-          -webkit-app-region: no-drag;
-          cursor: pointer;
-        }
-      }
-      .song-itembox {
-        width: 100%;
-        padding: 8px 18px;
-        display: flex;
-        cursor: pointer;
         -webkit-app-region: no-drag;
+        position: relative;
         transition: all 250ms ease;
         &:hover {
-          background: #F0F0F0;
-        }
-        .cover {
-          width: 38px;
-          height: 38px;
-          img {
-            display: block;
-            width: 100%;
-            height: 100%;
+          background: #FCFCFC;
+          .key {
+            color: $theme;
           }
         }
-        .info {
-          width: calc(100% - 38px);
-          padding: 0px 0px 0px 12px;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          .name {
-            font-size: 14px;
-            line-height: 1.6;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-          }
-          .singer {
-            font-size: 12px;
-            color: #999;
-            display: flex;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            i {
-              margin-right: 4px;
-              align-items: center;
-            }
+        &:last-child {
+          .r {
+            border-bottom: none;
           }
         }
-      }
-      .song-itembox-active{
-        .info {
-          width: calc(100% - 70px);
-        }
-        &:before {
-          content: '\e6a9';
-          font-family: iconfont;
-          position: absolute;
+        .key {
+          width: 60px;
           display: flex;
           justify-content: center;
           align-items: center;
-          right: 16px;
-          top: 0px;
-          height: 100%;
-          color: $theme;
-          font-size: 26px;
-        }
-        position: relative;
-        background: #F0F0F0;
-      }
-    }
-  }
-}
-.search-wrapper{
-  width: 100%;
-  height: 100%;
-  .search-area{
-    width: 100%;
-    height: 50px;
-    display: flex;
-    position: relative;
-    -webkit-app-region: no-drag;
-    .searchBtn{
-      display: flex;
-      width: 50px;
-      height: 50px;
-      justify-content: center;
-      align-items: center;
-      color: #999;
-      font-size: 20px;
-      cursor: pointer;
-      transition: all 250ms ease;
-      padding-top: 10px;
-    }
-    .clear{
-      display: flex;
-      width: 50px;
-      height: 50px;
-      justify-content: center;
-      align-items: center;
-      color: #999;
-      font-size: 20px;
-      cursor: pointer;
-      transition: all 250ms ease;
-      position: absolute;
-      right: 6px;
-      top: 0px;
-      padding-top: 10px;
-    }
-    input{
-      width: calc(100% - 50px - 20px);
-      border: none;
-      border-bottom: solid 1px #DDD;
-      padding-top: 12px;
-      font-size: 14px;
-      outline: none;
-      color: #333;
-      background: none;
-      &:focus{
-        border-bottom: solid 2px #333;
-      }
-    }
-    input::-webkit-input-placeholder{
-      color: #EEE;
-    }
-  }
-  .search-tab {
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    font-size: 14px;
-    align-items: center;
-    -webkit-app-region: no-drag;
-    padding-top: 16px;
-    .tab {
-      color: #999;
-      transition: all 250ms ease;
-      -webkit-app-region: no-drag;
-      cursor: pointer;
-      &:hover {
-        color: #333;
-      }
-    }
-    .cur {
-      color: #333;
-      font-weight: bold;
-    }
-  }
-  .search-tab-wrapper {
-    width: 100%;
-    height: calc(100vh - 50px - 32px);
-    .swiper-wrapper {
-      display: flex;
-      width: 400vw;
-      height: 100%;
-    }
-    .swiper-slide {
-      width: 100vw;
-      height: 100%;
-    }
-  }
-  .single-item {
-    width: 100%;
-    height: 100%;
-    padding: 10px 0px 18px;
-    .item-list {
-      width: 100%;
-      height: 100%;
-      overflow-y: auto;
-      padding-bottom: 68px;
-      padding-top: 10px;
-      .song-itembox {
-        width: 100%;
-        padding: 8px 18px;
-        display: flex;
-        cursor: pointer;
-        -webkit-app-region: no-drag;
-        transition: all 250ms ease;
-        &:hover {
-          background: #F0F0F0;
-        }
-        .cover {
-          width: 38px;
-          height: 38px;
-          img {
-            display: block;
-            width: 100%;
-            height: 100%;
-          }
-        }
-        .info {
-          width: calc(100% - 38px);
-          padding: 0px 0px 0px 12px;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          .name {
-            font-size: 14px;
-            line-height: 1.6;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-          }
-          .singer {
-            font-size: 12px;
-            color: #999;
-            display: flex;
-            i {
-              margin-right: 4px;
-              align-items: center;
-            }
-          }
-        }
-      }
-      .song-itembox-active{
-        .info {
-          width: calc(100% - 70px);
-        }
-        &:before {
-          content: '\e6a9';
-          font-family: iconfont;
-          position: absolute;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          right: 16px;
-          top: 0px;
-          height: 100%;
-          color: $theme;
-          font-size: 26px;
-        }
-        position: relative;
-        background: #F0F0F0;
-      }
-    }
-  }
-  .singer-item {
-    width: 100%;
-    height: 100%;
-    padding: 10px 0px 18px;
-    .item-list {
-      width: 100%;
-      height: 100%;
-      overflow-y: auto;
-      padding-bottom: 68px;
-      padding-top: 10px;
-      .song-itembox {
-        width: 100%;
-        padding: 8px 18px;
-        display: flex;
-        cursor: pointer;
-        -webkit-app-region: no-drag;
-        transition: all 250ms ease;
-        &:hover {
-          background: #F0F0F0;
-        }
-        .cover {
-          width: 38px;
-          height: 38px;
-          img {
-            display: block;
-            width: 100%;
-            height: 100%;
-          }
-        }
-        .info {
-          width: calc(100% - 38px);
-          padding: 0px 0px 0px 12px;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          .name {
-            font-size: 14px;
-            line-height: 1.6;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            i{
-              color: #C8C9CC;
-              margin-left: 5px;
-              font-size: 13px;
-            }
-          }
-        }
-      }
-      .song-itembox-active{
-        .info {
-          width: calc(100% - 70px);
-        }
-        &:before {
-          content: '\e6a9';
-          font-family: iconfont;
-          position: absolute;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          right: 16px;
-          top: 0px;
-          height: 100%;
-          color: $theme;
-          font-size: 26px;
-        }
-        position: relative;
-        background: #F0F0F0;
-      }
-    }
-  }
-  .album {
-    width: 100%;
-    height: 100%;
-    padding: 10px 0px 18px;
-    .item-list {
-      width: 100%;
-      height: 100%;
-      overflow-y: auto;
-      padding-bottom: 68px;
-      padding-top: 10px;
-      .album-itembox {
-        width: 50%;
-        padding: 8px 18px;
-        height: 48vw;
-        display: flex;
-        flex-direction: column;
-        cursor: pointer;
-        -webkit-app-region: no-drag;
-        transition: all 250ms ease;
-        float: left;
-        &:hover {
-          .cover {
-            &:before {
-              right: -24px;
-            }
-          }
-        }
-        .cover {
-          width: 30vw;
-          height: 30vw;
-          position: relative;
-          &:before {
-            content: '';
-            display: block;
-            width: 30vw;
-            height: 30vw;
-            background: #333;
-            border-radius: 50%;
-            position: absolute;
-            right: -15px;
-            top: 50%;
-            margin-top: -15vw;
-            transition: all 250ms ease-out;
-          }
-          img {
-            display: block;
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            left: 0px;
-            top: 0px;
-            z-index: 9;
-            box-shadow: 0px 2px 6px 0px rgba(73, 73, 73, 0.1);
-            background: #FFF;
-          }
-        }
-        .info {
-          width: 100%;
-          padding: 10px 0px 0px;
-          .name {
-            width: 100%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            font-size: 14px;
-            line-height: 1.6;
-          }
-          .singer {
-            width: 100%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            font-size: 12px;
-            color: #999;
-            display: flex;
-            i {
-              margin-right: 4px;
-              align-items: center;
-            }
-          }
-        }
-      }
-    }
-  }
-  .songlist {
-    width: 100%;
-    height: 100%;
-    padding: 10px 0px 18px;
-    .item-list {
-      width: 100%;
-      height: 100%;
-      overflow-y: auto;
-      -webkit-app-region: no-drag;
-      margin-top: 16px;
-      padding-bottom: 86px;
-      .album-itembox {
-        width: 100%;
-        padding: 8px 18px;
-        display: flex;
-        cursor: pointer;
-        -webkit-app-region: no-drag;
-        transition: all 250ms ease;
-        &:hover {
-          background: #F0F0F0;
-        }
-        .cover {
-          width: 68px;
-          height: 68px;
-          img {
-            display: block;
-            width: 100%;
-            height: 100%;
-          }
+          color: #ECECEC;
+          font-size: 16px;
+          font-weight: bold;
         }
         .r {
-          width: calc(100% - 68px);
-          padding: 0px 0px 0px 12px;
+          width: calc(100% - 60px);
           display: flex;
           flex-direction: column;
-          justify-content: space-between;
-          .desc {
+          justify-content: space-around;
+          border-bottom: solid 1px #FAFAFA;
+          padding: 10px 30px 10px 0px;
+          cursor: pointer;
+          .name {
             font-size: 14px;
-            line-height: 1.6;
+            color: #333;
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: normal;
           }
-          .num {
+          .singer {
             font-size: 12px;
             color: #999;
-            display: flex;
-            i {
-              margin-right: 4px;
-              align-items: center;
-            }
+            margin-top: 4px;
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: normal;
           }
+        }
+      }
+      .song-active{
+        &:before {
+          content: '\e6a9';
+          font-family: iconfont;
+          position: absolute;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          right: 16px;
+          top: 0px;
+          height: 100%;
+          color: $theme;
+          font-size: 26px;
+        }
+        background: #F0F0F0;
+        &:hover {
+          background: #F0F0F0;
+        }
+        .key {
+          color: $theme;
         }
       }
     }
   }
-  .album-detail,.songlist-detail,.singerlist-detail{
+  .ringLoading-wrap{
     width: calc(100vw - 50px);
     height: calc(100vh - 35px);
     position: fixed;
-    top: -85px;
-    z-index: 998;
-    background: #FFF;
+    left: 25px;
+    top: 10px;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    //pointer-events: none;
   }
-}
-.loadingmore{
-  width: 100%;
-  padding: 14px 0px;
-  display: flex;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 250ms ease;
-  &:hover{
-    background: #F0F0F0;
+  .search-wrapper{
+    width: 100%;
+    height: 100%;
+    .search-area{
+      width: 100%;
+      height: 50px;
+      display: flex;
+      position: relative;
+      -webkit-app-region: no-drag;
+      .searchBtn{
+        display: flex;
+        width: 50px;
+        height: 50px;
+        justify-content: center;
+        align-items: center;
+        color: #999;
+        font-size: 20px;
+        cursor: pointer;
+        transition: all 250ms ease;
+        padding-top: 10px;
+      }
+      .clear{
+        display: flex;
+        width: 50px;
+        height: 50px;
+        justify-content: center;
+        align-items: center;
+        color: #999;
+        font-size: 20px;
+        cursor: pointer;
+        transition: all 250ms ease;
+        position: absolute;
+        right: 6px;
+        top: 0px;
+        padding-top: 10px;
+      }
+      input{
+        width: calc(100% - 50px - 20px);
+        border: none;
+        border-bottom: solid 1px #DDD;
+        padding-top: 12px;
+        font-size: 14px;
+        outline: none;
+        color: #333;
+        background: none;
+        &:focus{
+          border-bottom: solid 2px #333;
+        }
+      }
+      input::-webkit-input-placeholder{
+        color: #EEE;
+      }
+    }
+    .search-tab {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      font-size: 14px;
+      align-items: center;
+      -webkit-app-region: no-drag;
+      padding-top: 16px;
+      .tab {
+        color: #999;
+        transition: all 250ms ease;
+        -webkit-app-region: no-drag;
+        cursor: pointer;
+        &:hover {
+          color: #333;
+        }
+      }
+      .cur {
+        color: #333;
+        font-weight: bold;
+      }
+    }
+    .search-tab-wrapper {
+      width: 100%;
+      height: calc(100vh - 50px - 32px);
+      .swiper-wrapper {
+        display: flex;
+        width: 400vw;
+        height: 100%;
+      }
+      .swiper-slide {
+        width: 100vw;
+        height: 100%;
+      }
+    }
+    .single-item {
+      width: 100%;
+      height: 100%;
+      padding: 10px 0px 18px;
+      .item-list {
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+        padding-bottom: 68px;
+        padding-top: 10px;
+        .song-itembox {
+          width: 100%;
+          padding: 8px 18px;
+          display: flex;
+          cursor: pointer;
+          -webkit-app-region: no-drag;
+          transition: all 250ms ease;
+          &:hover {
+            background: #F0F0F0;
+          }
+          .cover {
+            width: 38px;
+            height: 38px;
+            img {
+              display: block;
+              width: 100%;
+              height: 100%;
+            }
+          }
+          .info {
+            width: calc(100% - 38px);
+            padding: 0px 0px 0px 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            .name {
+              font-size: 14px;
+              line-height: 1.6;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
+            .singer {
+              font-size: 12px;
+              color: #999;
+              display: flex;
+              i {
+                margin-right: 4px;
+                align-items: center;
+              }
+            }
+          }
+        }
+        .song-itembox-active{
+          .info {
+            width: calc(100% - 70px);
+          }
+          &:before {
+            content: '\e6a9';
+            font-family: iconfont;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            right: 16px;
+            top: 0px;
+            height: 100%;
+            color: $theme;
+            font-size: 26px;
+          }
+          position: relative;
+          background: #F0F0F0;
+        }
+      }
+    }
+    .singer-item {
+      width: 100%;
+      height: 100%;
+      padding: 10px 0px 18px;
+      .item-list {
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+        padding-bottom: 68px;
+        padding-top: 10px;
+        .song-itembox {
+          width: 100%;
+          padding: 8px 18px;
+          display: flex;
+          cursor: pointer;
+          -webkit-app-region: no-drag;
+          transition: all 250ms ease;
+          &:hover {
+            background: #F0F0F0;
+          }
+          .cover {
+            width: 38px;
+            height: 38px;
+            img {
+              display: block;
+              width: 100%;
+              height: 100%;
+            }
+          }
+          .info {
+            width: calc(100% - 38px);
+            padding: 0px 0px 0px 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            .name {
+              font-size: 14px;
+              line-height: 1.6;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              i{
+                color: #C8C9CC;
+                margin-left: 5px;
+                font-size: 13px;
+              }
+            }
+          }
+        }
+        .song-itembox-active{
+          .info {
+            width: calc(100% - 70px);
+          }
+          &:before {
+            content: '\e6a9';
+            font-family: iconfont;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            right: 16px;
+            top: 0px;
+            height: 100%;
+            color: $theme;
+            font-size: 26px;
+          }
+          position: relative;
+          background: #F0F0F0;
+        }
+      }
+    }
+    .album {
+      width: 100%;
+      height: 100%;
+      padding: 10px 0px 18px;
+      .item-list {
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+        padding-bottom: 68px;
+        padding-top: 10px;
+        .album-itembox {
+          width: 50%;
+          padding: 8px 18px;
+          height: 48vw;
+          display: flex;
+          flex-direction: column;
+          cursor: pointer;
+          -webkit-app-region: no-drag;
+          transition: all 250ms ease;
+          float: left;
+          &:hover {
+            .cover {
+              &:before {
+                right: -24px;
+              }
+            }
+          }
+          .cover {
+            width: 30vw;
+            height: 30vw;
+            position: relative;
+            &:before {
+              content: '';
+              display: block;
+              width: 30vw;
+              height: 30vw;
+              background: #333;
+              border-radius: 50%;
+              position: absolute;
+              right: -15px;
+              top: 50%;
+              margin-top: -15vw;
+              transition: all 250ms ease-out;
+            }
+            img {
+              display: block;
+              width: 100%;
+              height: 100%;
+              position: absolute;
+              left: 0px;
+              top: 0px;
+              z-index: 9;
+              box-shadow: 0px 2px 6px 0px rgba(73, 73, 73, 0.1);
+              background: #FFF;
+            }
+          }
+          .info {
+            width: 100%;
+            padding: 10px 0px 0px;
+            .name {
+              width: 100%;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              font-size: 14px;
+              line-height: 1.6;
+            }
+            .singer {
+              width: 100%;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              font-size: 12px;
+              color: #999;
+              display: flex;
+              i {
+                margin-right: 4px;
+                align-items: center;
+              }
+            }
+          }
+        }
+      }
+    }
+    .songlist {
+      width: 100%;
+      height: 100%;
+      padding: 10px 0px 18px;
+      .item-list {
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+        -webkit-app-region: no-drag;
+        margin-top: 16px;
+        padding-bottom: 86px;
+        .album-itembox {
+          width: 100%;
+          padding: 8px 18px;
+          display: flex;
+          cursor: pointer;
+          -webkit-app-region: no-drag;
+          transition: all 250ms ease;
+          &:hover {
+            background: #F0F0F0;
+          }
+          .cover {
+            width: 68px;
+            height: 68px;
+            img {
+              display: block;
+              width: 100%;
+              height: 100%;
+            }
+          }
+          .r {
+            width: calc(100% - 68px);
+            padding: 0px 0px 0px 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            .desc {
+              font-size: 14px;
+              line-height: 1.6;
+            }
+            .num {
+              font-size: 12px;
+              color: #999;
+              display: flex;
+              i {
+                margin-right: 4px;
+                align-items: center;
+              }
+            }
+          }
+        }
+      }
+    }
+    .album-detail,.songlist-detail,.singerlist-detail{
+      width: calc(100vw - 50px);
+      height: calc(100vh - 35px);
+      position: fixed;
+      top: -85px;
+      z-index: 998;
+      background: #FFF;
+    }
   }
-}
-.loadingend{
-  width: 100%;
-  padding: 14px 0px;
-  display: flex;
-  justify-content: center;
-  color: #ECECEC;
-}
-.loadingempty{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  color: #ECECEC;
-  height: 60vh;
-  span{
-    font-size: 20vw;
+  .loadingmore{
+    width: 100%;
+    padding: 14px 0px;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 250ms ease;
+    &:hover{
+      background: #F0F0F0;
+    }
   }
-  p{
-    font-size: 14px;
+  .loadingend{
+    width: 100%;
+    padding: 14px 0px;
+    display: flex;
+    justify-content: center;
+    color: #ECECEC;
+  }
+  .loadingempty{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #ECECEC;
+    height: 60vh;
+    span{
+      font-size: 20vw;
+    }
+    p{
+      font-size: 14px;
+    }
   }
 }

@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-import playList from './modules/playList';
+import main from './modules/main'
 import Recommend from './modules/recommend';
 
 const rootReducer = combineReducers({
-  playList,
+  main,
   Recommend,
 });
 

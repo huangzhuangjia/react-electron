@@ -1,14 +1,14 @@
 import React, {Component} from 'react'
 import { Link } from 'react-router-dom'
 import Swiper from 'swiper'
-import Recommend from './recommend'
-import eventEmitter from '../config/eventEmitter'
-import * as Events from '../config/event-types'
+import Recommend from '../recommend'
+import eventEmitter from '../../config/eventEmitter'
+import * as Events from '../../config/event-types'
 const remote = window.electron.remote
 
 class Home extends Component {
   constructor() {
-    super()
+    super();
     this.state = {
       activeTab: 0,
       tabs: [
@@ -19,6 +19,7 @@ class Home extends Component {
       ]
     }
   }
+
   closeWindow() {
     // this.catchData();
     remote.getCurrentWindow().close();
