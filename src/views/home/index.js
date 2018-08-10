@@ -1,10 +1,15 @@
 import React, {Component} from 'react'
 import { Link } from 'react-router-dom'
+import Moment from 'moment'
 import Swiper from 'swiper'
 import Recommend from '../recommend'
+import NewSong from '../newSong'
 import eventEmitter from '../../config/eventEmitter'
 import * as Events from '../../config/event-types'
-const remote = window.electron.remote
+import store from "../../store"
+import db from '../../config/db'
+
+const remote = window.electron.remote;
 
 class Home extends Component {
   constructor() {
@@ -19,9 +24,32 @@ class Home extends Component {
       ]
     }
   }
+  // 缓存数据到本地
+  catchData() {
+    let vol = store.getState().main.volume;
+    let playOrder = store.getState().main.playOrder;
+    let currentSongId = store.getState().main.currentSong.id || '';
+    let currentTime = document.getElementById('audio').currentTime;
+    db.set('volume', vol).write();
+    db.set('playOrder', playOrder).write();
+    db.set('currentSongId', currentSongId).write();
+    db.set('currentTime', currentTime).write();
+    let recommendList = store.getState().recommend.recommendList || [];
+    // let newestList = store.getState().main.newestList || [];
+    // let albumList = store.getState().main.albumList || [];
+    // let albumTotal = this.refs.album.state.total;
+    // let albumOffset = this.refs.album.state.offset;
+    let catchTimestamp = new Date().getTime();
+    db.set('recommendCatch', recommendList).write();
+    // db.set('newestCatch', newestList).write();
+    // db.set('albumCatch', albumList).write();
+    // db.set('albumOffsetCatch', albumOffset).write();
+    // db.set('albumTotalCatch', albumTotal).write();
+    db.set('catchTimestamp', catchTimestamp).write();
+  }
 
   closeWindow() {
-    // this.catchData();
+    this.catchData();
     remote.getCurrentWindow().close();
   }
 
@@ -37,7 +65,67 @@ class Home extends Component {
   }
 
   initList() {
-
+    let activeTab = this.state.activeTab;
+    if(activeTab === 0 && !this.state.recommendLoad) {
+      this.refs.recommend.getRecommendList();
+      this.setState({
+        recommendLoad: true,
+      });
+    }else if(activeTab === 1 && !this.state.newestLoad) {
+      this.refs.newSong.getNewest();
+      this.setState({
+        newestLoad: true,
+      });
+    }else if(activeTab === 2 && !this.state.albumLoad) {
+      // this.refs.album.getAlbum();
+      // this.setState({
+      //   albumLoad: true,
+      // });
+    }
+  }
+  componentWillMount() {
+    let catchTimestamp = db.get('catchTimestamp').value() || 0;
+    let albumOffsetCatch = db.get('albumOffsetCatch').value() || 0;
+    let albumTotalCatch = db.get('albumTotalCatch').value() || 0;
+    let now = new Date().getTime();
+    /**
+     * 首页数据一天一更新,载入后先判断缓存的数据是否在当天如果不在了再去获取更新
+     */
+    if(Moment(catchTimestamp).isSame(now, 'day')) {
+      let recommendList = store.getState().recommend.recommendList || [],
+        newestList = store.getState().main.newestList || [];
+        // albumList = store.getState().main.albumList || [];
+      let recommendLoad = false,
+        newestLoad = false,
+        albumLoad = false;
+      if(recommendList.length > 0) {
+        recommendLoad = true;
+      }
+      if(newestList.length > 0) {
+        newestLoad = true;
+      }
+      // if(albumList.length > 0) {
+      //   albumLoad = true;
+      //   setTimeout(() => {
+      //     this.refs.album.setState({
+      //       offset: albumOffsetCatch,
+      //       total: albumTotalCatch,
+      //     });
+      //   }, 500)
+      // }
+      this.setState({
+        recommendLoad: recommendLoad,
+        newestLoad: newestLoad,
+        albumLoad: albumLoad,
+      });
+      setTimeout(() => {
+        this.initList();
+      }, 300);
+    }else {
+      setTimeout(() => {
+        this.initList();
+      }, 500);
+    }
   }
 
   componentDidMount() {
@@ -84,7 +172,7 @@ class Home extends Component {
         <div className="home-tab-wrapper">
           <div className="swiper-wrapper">
             <div className="swiper-slide"><Recommend ref="recommend" active={state.activeTab}/></div>
-            <div className="swiper-slide">2</div>
+            <div className="swiper-slide"><NewSong ref="newSong" active={state.activeTab}/></div>
             <div className="swiper-slide">3</div>
             <div className="swiper-slide">4</div>
           </div>

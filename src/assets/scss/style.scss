@@ -113,6 +113,17 @@ $theme: #666;
           }
         }
       }
+      .list-wrap-foot {
+        position: absolute;
+        bottom: 0;
+        padding: 8px;
+        text-align: center;
+        width: 100%;
+        border-top: solid 1px #F9F9F9;
+        cursor: pointer;
+        font-size: 12px;
+        background: #fff;
+      }
     }
     .mask-active{
       opacity: 1;
@@ -237,6 +248,279 @@ $theme: #666;
     z-index: 9999;
     transform: translate(-50%, -50%);
     word-break: break-all;
+  }
+  .play-ui-page {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0px;
+    top: 100vh;
+    z-index: 1000;
+    background: #FFF;
+    padding: 1px;
+    overflow: hidden;
+    transition: all 250ms ease-out;
+    -webkit-user-select: none;
+    .head {
+      position: absolute;
+      left: 0px;
+      top: 15px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      height: 50px;
+      align-items: center;
+      z-index: 9;
+      .back {
+        display: flex;
+        height: 50px;
+        width: 50px;
+        align-items: center;
+        justify-content: center;
+        color: #999;
+        font-size: 20px;
+        cursor: pointer;
+        -webkit-app-region: no-drag;
+      }
+      .menu {
+        display: flex;
+        height: 50px;
+        width: 50px;
+        align-items: center;
+        justify-content: center;
+        color: #999;
+        font-size: 20px;
+        cursor: pointer;
+        -webkit-app-region: no-drag;
+      }
+    }
+    .cover {
+      width: 32vw;
+      height: 32vw;
+      border-radius: 50%;
+      position: absolute;
+      left: 50%;
+      top: 16vh;
+      transform: translateX(-50%);
+      z-index: 11;
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        transform: scale(0.86);
+      }
+      #dotflag{
+        width: 1px;
+        height: 1px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+      }
+      .bar-wrap{
+        width: 100%;
+        height: 100%;
+        position: relative;
+        -webkit-app-region: no-drag;
+        .dot-wrap{
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          left: 0px;
+          top: 0px;
+          transform-origin: center;
+          z-index: 12;
+          transform: rotate(0deg);
+          .dot{
+            width: 12px;
+            height: 12px;
+            background: #666;
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            top: 0px;
+            margin-top: 2px;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            -webkit-app-region: no-drag;
+            &:before{
+              content: '';
+              display: block;
+              width: 20px;
+              height: 20px;
+              background: rgba(0,0,0,.14);
+              border-radius: 50%;
+              position: absolute;
+              left: 50%;
+              top: 50%;
+              transform: translate(-50%, -50%);
+              opacity: 0;
+              transition: all 250ms ease;
+            }
+            &:hover{
+              &:before{
+                opacity: 1;
+              }
+            }
+          }
+        }
+        svg{
+          width: 100%;
+          height: 100%;
+          display: block;
+          transform-origin: center center;
+          transform: rotate(-90deg);
+          .thumb{
+          }
+          .track{
+
+          }
+        }
+      }
+    }
+    .wave {
+      width: 100%;
+      height: 100vh;
+      //background: #F08F8F;
+      position: absolute;
+      left: 0px;
+      bottom: 0px;
+      canvas {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .player-panel {
+      width: 100%;
+      height: 27vh;
+      position: absolute;
+      left: 0px;
+      bottom: 0px;
+      z-index: 9;
+      background: none;
+      padding: 1px 20px;
+      -webkit-app-region: no-drag;
+      .song-name {
+        width: 100%;
+        font-size: 14px;
+        color: #FFF;
+        display: flex;
+        justify-content: center;
+        min-height: 16px;
+        height: 20px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .singer {
+        width: 100%;
+        font-size: 10px;
+        min-height: 12px;
+        color: #FFF;
+        display: flex;
+        justify-content: center;
+        margin-top: 1vh;
+      }
+      .time{
+        width: 100%;
+        font-size: 10px;
+        color: #FFF;
+        display: flex;
+        justify-content: center;
+        margin-top: 1vh;
+      }
+      .control {
+        width: 60vw;
+        margin: 2.2vh auto 0px;
+        display: flex;
+        height: 80px;
+        align-items: center;
+        justify-content: space-between;
+        color: #FFF;
+        .vol{
+          position: relative;
+          .vol-icon{
+            font-size: 5vw;
+            -webkit-app-region: no-drag;
+            cursor: pointer;
+            &:after{
+              display: none;
+              content: attr(data-vol);
+              color: #FFF;
+              font-size: 10px;
+              position: absolute;
+              left: 50%;
+              transform: translateX(-50%);
+              bottom: -14px;
+              font-family: "amble", "Microsoft YaHei", "PingFangSC-Regular", STHeiti, Helvetica, Arial, sans-serif !important;
+            }
+          }
+          .vol-icon-active{
+            &:after{
+              display: block;
+            }
+          }
+          .vol-panel{
+            width: 3px;
+            height: 20vw;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 28px;
+            .v-track{
+              border-radius: 1px;
+              width: 100%;
+              height: 100%;
+              background: rgba(255, 255, 255, .3);
+            }
+            .v-bar{
+              width: 100%;
+              height: 20%;
+              border-radius: 1px;
+              background: #FFF;
+              position: absolute;
+              left: 0px;
+              bottom: 0px;
+              pointer-events: none;
+            }
+            .dot{
+              width: 10px;
+              height: 10px;
+              background: #FFF;
+              position: absolute;
+              left: 50%;
+              bottom: 20%;
+              border-radius: 50%;
+              transform: translate(-50%, 50%);
+              z-index: 18;
+              cursor: pointer;
+            }
+          }
+        }
+        .order{
+          font-size: 5vw;
+          -webkit-app-region: no-drag;
+          cursor: pointer;
+        }
+        .change {
+          font-size: 6vw;
+          -webkit-app-region: no-drag;
+          cursor: pointer;
+        }
+        .play {
+          font-size: 10vw;
+          -webkit-app-region: no-drag;
+          cursor: pointer;
+          transition: all ease-in-out 250ms;
+        }
+      }
+    }
+  }
+  .play-ui-page-show {
+    top: 0px;
   }
   .home-wrapper {
     width: 100%;

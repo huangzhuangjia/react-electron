@@ -2,12 +2,12 @@ import axios from 'axios'
 import qs from 'qs'
 import config from '../config'
 
-let instance = axios.create({
+const instance = axios.create({
   baseURL: config.baseUrl,
 });
 
 function handleResponse (res) {
-  const Code = res.data.code
+  const Code = res.data.code;
   if (Code === 200) {
     return Promise.resolve(res.data)
   }

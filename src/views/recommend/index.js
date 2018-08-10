@@ -8,14 +8,12 @@ import * as Actions from '../../reducers/actions'
 import config from '../../config'
 
 class Index extends Component{
-  constructor() {
-    super();
-  }
   getRecommendList() {
     API.getRecommendList('/personalized').then(res => {
       store.dispatch(Actions.setRecommendList(res.result || []));
     }).catch(res => {})
   }
+
   getPlayCount(num) {
     let str;
     if(num > 10000) {
@@ -26,9 +24,7 @@ class Index extends Component{
     }
     return str
   }
-  componentDidMount() {
-    this.getRecommendList()
-  }
+
   renderList(recommendList) {
     return recommendList.map((data, k) => {
       if(k > 0) {
@@ -52,7 +48,7 @@ class Index extends Component{
     })
   }
   render() {
-    let recommendList = store.getState().Recommend.recommendList;
+    let recommendList = store.getState().recommend.recommendList;
     return (
       <div className="recommend-wrapper">
         {

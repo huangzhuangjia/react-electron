@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux';
 import main from './modules/main'
-import Recommend from './modules/recommend';
+import recommend from './modules/recommend';
+import newSong from './modules/newSong'
 
 const rootReducer = combineReducers({
   main,
-  Recommend,
+  recommend,
+  newSong,
 });
 
 export default rootReducer;
