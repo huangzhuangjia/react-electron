@@ -10,6 +10,7 @@
 /build
 .idea
 /release
+db.json
 # misc
 .DS_Store
 .env.local

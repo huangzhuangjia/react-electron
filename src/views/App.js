@@ -6,6 +6,7 @@ import Home from './home'
 import Search from './search'
 import ListDetail from './listDetail'
 import PlayDetail from './playDetail'
+import AlbumDetail from './albumDetail'
 import store from "../store"
 import RingLoading from '../components/ringLoading'
 import ControlBar from '../components/controlBar'
@@ -564,10 +565,18 @@ class App extends Component {
           <audio id="audio"></audio>
           {/*路由*/}
           <Switch>
-            <Route path="/search" component={Search}/>
-            <Route path="/home" component={Home}/>
-            <Route path="/listDetail/:id" component={ListDetail}/>
-            <Route path="/" component={Home}/>
+            {
+              1 === 1?
+                <React.Fragment>
+                  <Route path="/search" component={Search}/>
+                  <Route path="/listDetail/:id" component={ListDetail}/>
+                  <Route path="/albumDetail/:id" component={AlbumDetail}/>
+                  <Route path="/home" component={Home}/>
+                  <Route path="/" component={Home}/>
+                </React.Fragment>:<React.Fragment>
+                  <Route path="/" component={Search}/>
+                </React.Fragment>
+            }
           </Switch>
         </div>
       </Router>

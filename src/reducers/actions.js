@@ -76,3 +76,10 @@ export function setNewest(val) {
     value: val
   }
 }
+// 获取新碟列表
+export function setAlbumList(val) {
+  return {
+    type: Types.SET_ALBUM_LIST,
+    value: val
+  }
+}

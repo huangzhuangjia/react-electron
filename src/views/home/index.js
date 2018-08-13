@@ -4,6 +4,7 @@ import Moment from 'moment'
 import Swiper from 'swiper'
 import Recommend from '../recommend'
 import NewSong from '../newSong'
+import Album from '../ablum'
 import eventEmitter from '../../config/eventEmitter'
 import * as Events from '../../config/event-types'
 import store from "../../store"
@@ -16,6 +17,9 @@ class Home extends Component {
     super();
     this.state = {
       activeTab: 0,
+      recommendLoad: false,
+      newestLoad: false,
+      albumLoad: false,
       tabs: [
         {id: 0, name: '推荐歌单'},
         {id: 1, name: '最新单曲'},
@@ -35,16 +39,16 @@ class Home extends Component {
     db.set('currentSongId', currentSongId).write();
     db.set('currentTime', currentTime).write();
     let recommendList = store.getState().recommend.recommendList || [];
-    // let newestList = store.getState().main.newestList || [];
-    // let albumList = store.getState().main.albumList || [];
-    // let albumTotal = this.refs.album.state.total;
-    // let albumOffset = this.refs.album.state.offset;
+    let newestList = store.getState().newSong.newestList || [];
+    let albumList = store.getState().album.albumList || [];
+    let albumTotal = this.refs.album.state.total;
+    let albumOffset = this.refs.album.state.offset;
     let catchTimestamp = new Date().getTime();
     db.set('recommendCatch', recommendList).write();
-    // db.set('newestCatch', newestList).write();
-    // db.set('albumCatch', albumList).write();
-    // db.set('albumOffsetCatch', albumOffset).write();
-    // db.set('albumTotalCatch', albumTotal).write();
+    db.set('newestCatch', newestList).write();
+    db.set('albumCatch', albumList).write();
+    db.set('albumOffsetCatch', albumOffset).write();
+    db.set('albumTotalCatch', albumTotal).write();
     db.set('catchTimestamp', catchTimestamp).write();
   }
 
@@ -77,10 +81,10 @@ class Home extends Component {
         newestLoad: true,
       });
     }else if(activeTab === 2 && !this.state.albumLoad) {
-      // this.refs.album.getAlbum();
-      // this.setState({
-      //   albumLoad: true,
-      // });
+      this.refs.album.getAlbum();
+      this.setState({
+        albumLoad: true,
+      });
     }
   }
   componentWillMount() {
@@ -93,8 +97,8 @@ class Home extends Component {
      */
     if(Moment(catchTimestamp).isSame(now, 'day')) {
       let recommendList = store.getState().recommend.recommendList || [],
-        newestList = store.getState().main.newestList || [];
-        // albumList = store.getState().main.albumList || [];
+        newestList = store.getState().newSong.newestList || [],
+        albumList = store.getState().album.albumList || [];
       let recommendLoad = false,
         newestLoad = false,
         albumLoad = false;
@@ -104,15 +108,15 @@ class Home extends Component {
       if(newestList.length > 0) {
         newestLoad = true;
       }
-      // if(albumList.length > 0) {
-      //   albumLoad = true;
-      //   setTimeout(() => {
-      //     this.refs.album.setState({
-      //       offset: albumOffsetCatch,
-      //       total: albumTotalCatch,
-      //     });
-      //   }, 500)
-      // }
+      if(albumList.length > 0) {
+        albumLoad = true;
+        setTimeout(() => {
+          this.refs.album.setState({
+            offset: albumOffsetCatch,
+            total: albumTotalCatch,
+          });
+        }, 500)
+      }
       this.setState({
         recommendLoad: recommendLoad,
         newestLoad: newestLoad,
@@ -173,7 +177,7 @@ class Home extends Component {
           <div className="swiper-wrapper">
             <div className="swiper-slide"><Recommend ref="recommend" active={state.activeTab}/></div>
             <div className="swiper-slide"><NewSong ref="newSong" active={state.activeTab}/></div>
-            <div className="swiper-slide">3</div>
+            <div className="swiper-slide"><Album ref="album" active={state.activeTab}/></div>
             <div className="swiper-slide">4</div>
           </div>
         </div>

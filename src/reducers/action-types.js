@@ -19,3 +19,5 @@ export const SET_CURRENT_SONG_INFO = 'SET_CURRENT_SONG_INFO';
 export const SET_LOCAL_PLAY_LIST = 'SET_LOCAL_PLAY_LIST';
 
 export const SET_NEWEST = 'SET_NEWEST';
+
+export const SET_ALBUM_LIST = 'SET_ALBUM_LIST';
